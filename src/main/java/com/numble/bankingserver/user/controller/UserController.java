@@ -5,6 +5,7 @@ import com.numble.bankingserver.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody JoinDTO joinDTO) {
+    public ResponseEntity<String> join(@RequestBody JoinDTO joinDTO) throws Exception {
         service.joinUser(joinDTO);
         return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
     }
