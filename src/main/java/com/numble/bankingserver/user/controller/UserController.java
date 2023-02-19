@@ -5,7 +5,6 @@ import com.numble.bankingserver.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,10 +24,4 @@ public class UserController {
         service.joinUser(joinDTO);
         return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
     }
-
-    @GetMapping("/login")
-    public ResponseEntity<String> login() {
-        return new ResponseEntity<>("로그인 완료", HttpStatus.OK);
-    }
-
 }
