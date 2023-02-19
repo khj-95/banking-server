@@ -1,6 +1,7 @@
 package com.numble.bankingserver.user.domain;
 
 import com.numble.bankingserver.user.dto.JoinDTO;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,9 +29,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @Column(nullable = false, unique = true)
     private String userId;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private String name;
     /*
      * JWT RefreshToken 필드
