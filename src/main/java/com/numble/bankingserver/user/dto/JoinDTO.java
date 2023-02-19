@@ -9,7 +9,7 @@ import lombok.Setter;
 public class JoinDTO {
 
     @NotNull
-    private String userId;
+    private String id;
     private String password;
     private String name;
 }

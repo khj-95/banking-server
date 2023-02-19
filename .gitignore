@@ -38,3 +38,6 @@ out/
 
 ### mysql ###
 /src/main/resources/application-mysql.properties
+
+### jwt ###
+/src/main/resources/application-jwt.properties

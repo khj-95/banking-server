@@ -32,6 +32,12 @@ public class User {
     private String userId;
     private String password;
     private String name;
+    /*
+     * JWT RefreshToken 필드
+     * JWT를 사용하여 로그인 성공 시 AccessToken, RefreshToken을 발행하는데
+     * 발행된 RefreshToken을 User Entity에 저장
+     * */
+    private String refreshToken; // 리프레시 토큰
 
     @Builder
     private User(String userId, String password, String name) {
@@ -42,7 +48,7 @@ public class User {
 
     public static User createUser(JoinDTO joinDTO) {
         return User.builder()
-            .userId(joinDTO.getUserId())
+            .userId(joinDTO.getId())
             .password(joinDTO.getPassword())
             .name(joinDTO.getName())
             .build();
@@ -51,5 +57,10 @@ public class User {
     // 비밀번호 암호화 메서드
     public void passwordEncode(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
+    }
+
+    // 리프레시 토큰 재발급 메서드
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
     }
 }

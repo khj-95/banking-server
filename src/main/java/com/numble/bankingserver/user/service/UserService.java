@@ -17,7 +17,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public void joinUser(JoinDTO joinDTO) throws Exception {
-        if (repository.findByUserId(joinDTO.getUserId()).isPresent()) {
+        if (repository.findByUserId(joinDTO.getId()).isPresent()) {
             throw new Exception("이미 존재하는 아이디입니다.");
         }
 

@@ -26,4 +26,9 @@ public class UserController {
         return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
     }
 
+    @GetMapping("/login")
+    public ResponseEntity<String> login() {
+        return new ResponseEntity<>("로그인 완료", HttpStatus.OK);
+    }
+
 }
