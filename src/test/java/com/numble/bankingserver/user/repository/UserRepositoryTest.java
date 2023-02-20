@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * 회원 저장시 이름이 없으면 오류
  * 회원 저장시 중복된 아이디가 있으면 오류
  * userId으로 회원 찾기 기능이 잘 작동하는지
+ * existsByUserId가 잘 작동하는지
  */
 @SpringBootTest
 @Transactional
@@ -108,5 +109,18 @@ class UserRepositoryTest {
         assertThat(repository.findByUserId(userId).get().getId()).isEqualTo(user1.getId());
         assertThrows(Exception.class,
             () -> repository.findByUserId(userId + "123").orElseThrow(() -> new Exception()));
+    }
+
+    @Test
+    public void existsByUserId_정상작동() throws Exception {
+        //given
+        String userId = "userId";
+        User user1 = User.builder().userId("userId").password("1234567890").name("User1").build();
+        repository.save(user1);
+        clear();
+
+        //when, then
+        assertThat(repository.existsByUserId(userId)).isTrue();
+        assertThat(repository.existsByUserId(userId + "123")).isFalse();
     }
 }
