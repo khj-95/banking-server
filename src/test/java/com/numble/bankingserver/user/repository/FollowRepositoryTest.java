@@ -11,6 +11,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 
 /*
  * 친구 추가
@@ -18,6 +20,7 @@ import org.springframework.boot.test.context.SpringBootTest;
  * 친구 추가시 추기할 유저 객체가 없으면 오류
  * 친구 추가시 중복된 친구 관계면 오류
  * existsByFromUserAndToUser가 잘 작동하는지
+ * findByFromUserId가 잘 작동하는지
  */
 @SpringBootTest
 @Transactional
@@ -130,5 +133,42 @@ class FollowRepositoryTest {
         assertThat(repository.existsByFromUserAndToUser(user2, user1)).isFalse();
     }
 
+    @Test
+    public void findByFromUserId_정상작동() {
+        User user1 = User.builder().userId("userId1").password("1234567890").name("User1").build();
+        User user2 = User.builder().userId("userId2").password("1234567890").name("User2").build();
+        User user3 = User.builder().userId("userId3").password("1234567890").name("User3").build();
 
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
+        clear();
+
+        Follow follow1 = Follow.builder().fromUser(user1).toUser(user2).build();
+        Follow follow2 = Follow.builder().fromUser(user1).toUser(user3).build();
+        Follow follow3 = Follow.builder().fromUser(user2).toUser(user3).build();
+
+        repository.save(follow1);
+        repository.save(follow2);
+        repository.save(follow3);
+        clear();
+
+        PageRequest pageRequest = PageRequest.of(0, 20);
+        Page<Follow> followList = repository.findByFromUserUserId("userId1", pageRequest);
+
+        Follow first = followList.getContent().get(0);
+        Follow second = followList.getContent().get(1);
+
+        assertThat(followList.getTotalElements()).isEqualTo(2);
+
+        assertThat(first.getFromUser().getUserId()).isEqualTo(follow1.getFromUser().getUserId());
+        assertThat(first.getFromUser().getName()).isEqualTo(follow1.getFromUser().getName());
+        assertThat(first.getToUser().getUserId()).isEqualTo(follow1.getToUser().getUserId());
+        assertThat(first.getToUser().getName()).isEqualTo(follow1.getToUser().getName());
+
+        assertThat(second.getFromUser().getUserId()).isEqualTo(follow2.getFromUser().getUserId());
+        assertThat(second.getFromUser().getName()).isEqualTo(follow2.getFromUser().getName());
+        assertThat(second.getToUser().getUserId()).isEqualTo(follow2.getToUser().getUserId());
+        assertThat(second.getToUser().getName()).isEqualTo(follow2.getToUser().getName());
+    }
 }
