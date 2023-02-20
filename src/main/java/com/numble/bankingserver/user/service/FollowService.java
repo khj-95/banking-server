@@ -4,9 +4,13 @@ import com.numble.bankingserver.user.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.user.repository.FollowRepository;
 import com.numble.bankingserver.user.repository.UserRepository;
+import com.numble.bankingserver.user.vo.FollowVO;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,5 +43,14 @@ public class FollowService {
         repository.save(follow);
 
         log.info("follow from {} to {}", userId, followingId);
+    }
+
+
+    public Page<FollowVO> lookUpFollowList(int page, String userId) {
+        PageRequest pageRequest = PageRequest.of(page, 20);
+        Page<Follow> followList = repository.findByFromUserUserId(userId, pageRequest);
+        return new PageImpl<>(
+            FollowVO.toFollowList(followList), pageRequest, followList.getTotalElements()
+        );
     }
 }
