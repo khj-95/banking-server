@@ -1,10 +1,11 @@
-package com.numble.bankingserver.user.repository;
+package com.numble.bankingserver.follow.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.numble.bankingserver.user.domain.Follow;
+import com.numble.bankingserver.follow.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
+import com.numble.bankingserver.user.repository.UserRepository;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;

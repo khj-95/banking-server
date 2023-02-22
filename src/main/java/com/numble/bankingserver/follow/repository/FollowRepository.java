@@ -1,6 +1,6 @@
-package com.numble.bankingserver.user.repository;
+package com.numble.bankingserver.follow.repository;
 
-import com.numble.bankingserver.user.domain.Follow;
+import com.numble.bankingserver.follow.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

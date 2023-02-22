@@ -1,5 +1,6 @@
-package com.numble.bankingserver.user.domain;
+package com.numble.bankingserver.follow.domain;
 
+import com.numble.bankingserver.user.domain.User;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

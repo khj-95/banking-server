@@ -1,10 +1,10 @@
-package com.numble.bankingserver.user.service;
+package com.numble.bankingserver.follow.service;
 
-import com.numble.bankingserver.user.domain.Follow;
+import com.numble.bankingserver.follow.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
-import com.numble.bankingserver.user.repository.FollowRepository;
+import com.numble.bankingserver.follow.repository.FollowRepository;
 import com.numble.bankingserver.user.repository.UserRepository;
-import com.numble.bankingserver.user.vo.FollowVO;
+import com.numble.bankingserver.follow.vo.FollowVO;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

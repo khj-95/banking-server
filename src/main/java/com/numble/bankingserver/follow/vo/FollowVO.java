@@ -1,6 +1,6 @@
-package com.numble.bankingserver.user.vo;
+package com.numble.bankingserver.follow.vo;
 
-import com.numble.bankingserver.user.domain.Follow;
+import com.numble.bankingserver.follow.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
 import java.util.ArrayList;
 import java.util.List;
