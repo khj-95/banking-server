@@ -2,6 +2,7 @@ package com.numble.bankingserver.open.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.numble.bankingserver.open.dto.Accounts;
 import java.security.Principal;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,10 +16,9 @@ public class OpenAccountVO {
 
     @JsonCreator
     @Builder
-    public OpenAccountVO(Principal principal, @JsonProperty("account-number") String accountNumber,
-        @JsonProperty("balance") long balance) {
+    public OpenAccountVO(Principal principal, @JsonProperty("balance") long balance) {
         this.id = principal.getName();
-        this.accountNumber = accountNumber;
+        this.accountNumber = Accounts.createAccountNumber();
         this.balance = balance;
     }
 }

@@ -2,6 +2,7 @@ package com.numble.bankingserver.open.service;
 
 import com.numble.bankingserver.open.domain.Account;
 import com.numble.bankingserver.open.dto.AccountDTO;
+import com.numble.bankingserver.open.dto.Accounts;
 import com.numble.bankingserver.open.repository.AccountRepository;
 import com.numble.bankingserver.open.vo.OpenAccountVO;
 import com.numble.bankingserver.user.domain.User;
@@ -25,7 +26,7 @@ public class OpenService {
         AccountDTO accountDTO = AccountDTO.convertToAccountDTO(openAccountVO, user);
 
         while (repository.existsByAccountNumber(accountDTO.getAccountNumber())) {
-            // 계좌번호 재생성
+            accountDTO.setAccountNumber(Accounts.createAccountNumber());
         }
 
         Account openAccount = Account.createAccount(accountDTO);
