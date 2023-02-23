@@ -11,8 +11,7 @@ public class OpenAccountVO {
 
     private String id;
     private String accountNumber;
-    @Builder.Default
-    private long balance = 0;
+    private long balance;
 
     @JsonCreator
     @Builder

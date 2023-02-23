@@ -32,7 +32,6 @@ public class Account extends BaseTime {
     private User user;
     @Column(nullable = false)
     private String accountNumber;
-    @Column(nullable = false)
     private long balance;
 
     @Builder

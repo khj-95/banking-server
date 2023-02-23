@@ -15,7 +15,7 @@ public class AccountDTO {
     private String accountNumber;
     private long balance;
 
-    public static AccountDTO createAccountDTO(OpenAccountVO vo, User user) {
+    public static AccountDTO convertToAccountDTO(OpenAccountVO vo, User user) {
         return AccountDTO.builder()
             .user(user)
             .accountNumber(vo.getAccountNumber())
