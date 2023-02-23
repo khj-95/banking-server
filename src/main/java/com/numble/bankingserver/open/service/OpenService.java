@@ -18,11 +18,17 @@ public class OpenService {
     private final AccountRepository repository;
     private final UserRepository userRepository;
 
-    public void openAccount(OpenAccountVO vo) {
-        User user = userRepository.findByUserId(vo.getId())
+    public void openAccount(OpenAccountVO openAccountVO) {
+        User user = userRepository.findByUserId(openAccountVO.getId())
             .orElseThrow(() -> new RuntimeException());
 
-        Account openAccount = Account.createAccount(AccountDTO.createAccountDTO(vo, user));
+        AccountDTO accountDTO = AccountDTO.convertToAccountDTO(openAccountVO, user);
+
+        while (repository.existsByAccountNumber(accountDTO.getAccountNumber())) {
+            // 계좌번호 재생성
+        }
+
+        Account openAccount = Account.createAccount(accountDTO);
 
         repository.save(openAccount);
     }

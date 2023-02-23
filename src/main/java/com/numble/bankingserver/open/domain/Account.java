@@ -30,7 +30,8 @@ public class Account extends BaseTime {
     @ManyToOne
     @JoinColumn(nullable = false)
     private User user;
-    @Column(nullable = false)
+    // 계좌번호 : 3자리-2자리-6자리 형태
+    @Column(nullable = false, unique = true)
     private String accountNumber;
     private long balance;
 
