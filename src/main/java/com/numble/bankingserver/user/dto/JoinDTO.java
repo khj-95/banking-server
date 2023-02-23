@@ -1,6 +1,6 @@
 package com.numble.bankingserver.user.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,8 +8,10 @@ import lombok.Setter;
 @Setter
 public class JoinDTO {
 
-    @NotNull
+    @NotBlank
     private String id;
+    @NotBlank
     private String password;
+    @NotBlank
     private String name;
 }
