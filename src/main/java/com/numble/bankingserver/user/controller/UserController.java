@@ -1,7 +1,8 @@
 package com.numble.bankingserver.user.controller;
 
-import com.numble.bankingserver.user.dto.JoinDTO;
+import com.numble.bankingserver.user.dto.JoinVO;
 import com.numble.bankingserver.user.service.UserService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,8 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@RequestBody JoinDTO joinDTO) throws Exception {
-        service.joinUser(joinDTO);
+    public ResponseEntity<String> join(@Valid @RequestBody JoinVO joinVO) throws Exception {
+        service.joinUser(joinVO);
         return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
     }
 }

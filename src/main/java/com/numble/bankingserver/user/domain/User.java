@@ -1,6 +1,6 @@
 package com.numble.bankingserver.user.domain;
 
-import com.numble.bankingserver.user.dto.JoinDTO;
+import com.numble.bankingserver.user.dto.JoinVO;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -50,11 +50,11 @@ public class User {
         this.name = name;
     }
 
-    public static User createUser(JoinDTO joinDTO) {
+    public static User createUser(JoinVO joinVO) {
         return User.builder()
-            .userId(joinDTO.getId())
-            .password(joinDTO.getPassword())
-            .name(joinDTO.getName())
+            .userId(joinVO.getId())
+            .password(joinVO.getPassword())
+            .name(joinVO.getName())
             .build();
     }
 
