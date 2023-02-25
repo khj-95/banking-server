@@ -18,7 +18,7 @@ public class OpenAccountVO {
     @Builder
     public OpenAccountVO(Principal principal, @JsonProperty("balance") long balance) {
         this.id = principal.getName();
-        this.accountNumber = Accounts.createAccountNumber();
+        this.accountNumber = Accounts.generateAccountNumber();
         this.balance = balance;
     }
 }

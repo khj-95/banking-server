@@ -26,7 +26,7 @@ public class OpenService {
         AccountDTO accountDTO = AccountDTO.convertToAccountDTO(openAccountVO, user);
 
         while (repository.existsByAccountNumber(accountDTO.getAccountNumber())) {
-            accountDTO.setAccountNumber(Accounts.createAccountNumber());
+            accountDTO.setAccountNumber(Accounts.generateAccountNumber());
         }
 
         Account openAccount = Account.createAccount(accountDTO);
