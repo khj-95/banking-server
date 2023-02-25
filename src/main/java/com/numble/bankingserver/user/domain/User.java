@@ -1,6 +1,7 @@
 package com.numble.bankingserver.user.domain;
 
 import com.numble.bankingserver.user.dto.JoinDTO;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -65,5 +66,21 @@ public class User {
     // 리프레시 토큰 재발급 메서드
     public void updateRefreshToken(String updateRefreshToken) {
         this.refreshToken = updateRefreshToken;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            User tmp = (User) obj;
+            return userId.equals(tmp.getUserId())
+                && password.equals(tmp.getPassword())
+                && name.equals(tmp.getName());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, password, name);
     }
 }

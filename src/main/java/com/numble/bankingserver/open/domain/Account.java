@@ -3,6 +3,7 @@ package com.numble.bankingserver.open.domain;
 import com.numble.bankingserver.common.util.BaseTime;
 import com.numble.bankingserver.open.dto.AccountDTO;
 import com.numble.bankingserver.user.domain.User;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -54,10 +55,26 @@ public class Account extends BaseTime {
     }
 
     @PrePersist
-    private void checkBalance(){
-        if(this.balance < 0){
+    private void checkBalance() {
+        if (this.balance < 0) {
             log.info("잔액은 음수일 수 없습니다.");
             throw new RuntimeException();
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Account) {
+            Account tmp = (Account) obj;
+            return user.equals(tmp.getUser())
+                && accountNumber.equals(tmp.getAccountNumber())
+                && balance == tmp.getBalance();
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(user, accountNumber, balance);
     }
 }

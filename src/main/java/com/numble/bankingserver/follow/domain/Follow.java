@@ -1,6 +1,7 @@
 package com.numble.bankingserver.follow.domain;
 
 import com.numble.bankingserver.user.domain.User;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -52,4 +53,17 @@ public class Follow {
             .build();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Follow) {
+            Follow tmp = (Follow) obj;
+            return fromUser.equals(tmp.getFromUser()) && toUser.equals(tmp.getToUser());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fromUser, toUser);
+    }
 }
