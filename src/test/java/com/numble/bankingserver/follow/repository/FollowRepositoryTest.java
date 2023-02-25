@@ -161,15 +161,7 @@ class FollowRepositoryTest {
         Follow second = followList.getContent().get(1);
 
         assertThat(followList.getTotalElements()).isEqualTo(2);
-
-        assertThat(first.getFromUser().getUserId()).isEqualTo(follow1.getFromUser().getUserId());
-        assertThat(first.getFromUser().getName()).isEqualTo(follow1.getFromUser().getName());
-        assertThat(first.getToUser().getUserId()).isEqualTo(follow1.getToUser().getUserId());
-        assertThat(first.getToUser().getName()).isEqualTo(follow1.getToUser().getName());
-
-        assertThat(second.getFromUser().getUserId()).isEqualTo(follow2.getFromUser().getUserId());
-        assertThat(second.getFromUser().getName()).isEqualTo(follow2.getFromUser().getName());
-        assertThat(second.getToUser().getUserId()).isEqualTo(follow2.getToUser().getUserId());
-        assertThat(second.getToUser().getName()).isEqualTo(follow2.getToUser().getName());
+        assertThat(first).isEqualTo(follow1);
+        assertThat(second).isEqualTo(follow2);
     }
 }
