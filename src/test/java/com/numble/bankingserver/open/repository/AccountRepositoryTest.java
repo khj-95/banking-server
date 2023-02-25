@@ -6,6 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import com.numble.bankingserver.open.domain.Account;
 import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.user.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
@@ -21,6 +23,8 @@ import org.springframework.boot.test.context.SpringBootTest;
  * 계좌 추가시 계좌번호 중복되면 오류
  * 계좌 추가시 초기 잔고가 음수면 오류
  * existsAccountNumber가 잘 작동하는지
+ * findByUserUserId가 잘 작동하는지
+ * findByUserUserIdAndAccountNumber가 잘 작동하는지
  * */
 @SpringBootTest
 @Transactional
@@ -159,5 +163,62 @@ class AccountRepositoryTest {
         //when, then
         assertThat(repository.existsByAccountNumber(accountNumber)).isTrue();
         assertThat(repository.existsByAccountNumber(diffAccountNumber)).isFalse();
+    }
+
+    @Test
+    public void findByUserUserId_정상작동() throws Exception {
+        //given
+        User user1 = User.builder().userId("userId").password("1234567890").name("User1").build();
+        userRepository.save(user1);
+        Account account1 = Account.builder()
+            .user(user1)
+            .accountNumber("1234-123-123456")
+            .balance(1000)
+            .build();
+        Account account2 = Account.builder()
+            .user(user1)
+            .accountNumber("1234-123-123457")
+            .balance(1000)
+            .build();
+        repository.save(account1);
+        repository.save(account2);
+        clear();
+
+        //when
+        List<Account> findAccountList1 = repository.findByUserUserId("userId");
+
+        //then
+        assertThat(findAccountList1.size()).isEqualTo(2);
+        assertThat(findAccountList1.get(0)).isEqualTo(account1);
+        assertThat(findAccountList1.get(1)).isEqualTo(account2);
+
+        //when
+        List<Account> findAccountList2 = repository.findByUserUserId("userId1");
+
+        //then
+        assertThat(findAccountList2.size()).isEqualTo(0);
+
+    }
+
+    @Test
+    public void findByUserUserIdAndAccountNumber_정상작동() throws Exception {
+        //given
+        User user1 = User.builder().userId("userId").password("1234567890").name("User1").build();
+        userRepository.save(user1);
+        Account account = Account.builder()
+            .user(user1)
+            .accountNumber("1234-123-123456")
+            .balance(1000)
+            .build();
+        repository.save(account);
+        clear();
+
+        //when, then
+        assertThat(
+            repository.findByUserUserIdAndAccountNumber("userId", "1234-123-123456"))
+            .isEqualTo(Optional.of(account));
+        assertThat(
+            repository.findByUserUserIdAndAccountNumber("userId", "1234-123-123457"))
+            .isSameAs(Optional.empty());
     }
 }
