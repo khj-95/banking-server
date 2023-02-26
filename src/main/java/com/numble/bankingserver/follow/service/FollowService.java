@@ -71,7 +71,8 @@ public class FollowService {
     }
 
     private void checkNotExistedFriend(User fromUser, User toUser) throws Exception {
-        if (repository.existsByFromUserAndToUser(fromUser, toUser)) {
+        if (repository.existsByFromUserUserIdAndToUserUserId(
+            fromUser.getUserId(), toUser.getUserId())) {
             log.error(FOLLOW_ERROR);
             throw new Exception("이미 존재하는 친구입니다.");
         }

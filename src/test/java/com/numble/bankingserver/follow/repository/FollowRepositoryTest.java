@@ -20,7 +20,7 @@ import org.springframework.data.domain.PageRequest;
  * 친구 추가시 유저 객체가 없으면 오류
  * 친구 추가시 추기할 유저 객체가 없으면 오류
  * 친구 추가시 중복된 친구 관계면 오류
- * existsByFromUserAndToUser가 잘 작동하는지
+ * existsByFromUserUserIdAndToUserUserId가 잘 작동하는지
  * findByFromUserId가 잘 작동하는지
  */
 @SpringBootTest
@@ -117,7 +117,7 @@ class FollowRepositoryTest {
     }
 
     @Test
-    public void existsByFromUserAndToUser_정상작동() {
+    public void existsByFromUserUserIdAndToUserUserId가_정상작동() {
         User user1 = User.builder().userId("userId1").password("1234567890").name("User1").build();
         User user2 = User.builder().userId("userId2").password("1234567890").name("User2").build();
 
@@ -130,8 +130,10 @@ class FollowRepositoryTest {
         repository.save(follow);
         clear();
 
-        assertThat(repository.existsByFromUserAndToUser(user1, user2)).isTrue();
-        assertThat(repository.existsByFromUserAndToUser(user2, user1)).isFalse();
+        assertThat(repository.existsByFromUserUserIdAndToUserUserId("userId1", "userId2"))
+            .isTrue();
+        assertThat(repository.existsByFromUserUserIdAndToUserUserId("userId2", "userId1"))
+            .isFalse();
     }
 
     @Test

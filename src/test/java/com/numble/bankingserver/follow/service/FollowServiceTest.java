@@ -48,7 +48,8 @@ class FollowServiceTest {
 
         when(userRepository.findByUserId(any()))
             .thenReturn(Optional.of(fromUser), Optional.of(toUser));
-        when(followRepository.existsByFromUserAndToUser(any(), any())).thenReturn(false);
+        when(followRepository.existsByFromUserUserIdAndToUserUserId(any(), any()))
+            .thenReturn(false);
 
         assertDoesNotThrow(() -> followService.follow("userId1", "userId2"));
     }
@@ -95,7 +96,8 @@ class FollowServiceTest {
 
         when(userRepository.findByUserId(any()))
             .thenReturn(Optional.of(fromUser), Optional.of(toUser));
-        when(followRepository.existsByFromUserAndToUser(any(), any())).thenReturn(true);
+        when(followRepository.existsByFromUserUserIdAndToUserUserId(any(), any()))
+            .thenReturn(true);
 
         assertThatThrownBy(() -> followService.follow("userId1", "userId1"))
             .hasMessage("이미 존재하는 친구입니다.");
