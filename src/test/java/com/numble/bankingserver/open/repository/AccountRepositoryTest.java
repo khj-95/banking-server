@@ -1,6 +1,7 @@
 package com.numble.bankingserver.open.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.numble.bankingserver.open.domain.Account;
@@ -142,7 +143,8 @@ class AccountRepositoryTest {
             .balance(-1000).build();
 
         //when, then
-        assertThrows(Exception.class, () -> repository.save(account));
+        assertThatThrownBy(() -> repository.save(account))
+            .hasMessage("잔액은 음수일 수 없습니다.");
     }
 
     @Test
