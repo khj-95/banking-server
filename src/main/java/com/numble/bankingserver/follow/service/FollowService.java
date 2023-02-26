@@ -19,24 +19,15 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FollowService {
 
+    private final String FOLLOW_ERROR = "FOLLOW ERROR";
     private final FollowRepository repository;
     private final UserRepository userRepository;
 
     public void follow(String followingId, String userId) throws Exception {
-        User fromUser = userRepository.findByUserId(userId)
-            .orElseThrow(() -> new RuntimeException());
-        User toUser = userRepository.findByUserId(followingId)
-            .orElseThrow(() -> new RuntimeException());
+        User fromUser = getUser(userId, "요청자 정보가 유효하지 않습니다.");
+        User toUser = getUser(followingId, "추가할 친구 정보가 유효하지 않습니다.");
 
-        if (!userRepository.existsByUserId(followingId)) {
-            log.error("추가할 친구 정보가 유효하지 않습니다.");
-            throw new Exception();
-        }
-
-        if (repository.existsByFromUserAndToUser(fromUser, toUser)) {
-            log.error("이미 존재하는 친구입니다.");
-            throw new Exception();
-        }
+        checkValidFollowRequest(fromUser, toUser);
 
         Follow follow = Follow.createFollow(fromUser, toUser);
 
@@ -52,5 +43,32 @@ public class FollowService {
         return new PageImpl<>(
             FollowVO.toFollowList(followList), pageRequest, followList.getTotalElements()
         );
+    }
+
+    private User getUser(String userId, String message) {
+        return userRepository.findByUserId(userId)
+            .orElseThrow(() -> {
+                log.error(FOLLOW_ERROR);
+                return new RuntimeException(message);
+            });
+    }
+
+    private void checkValidFollowRequest(User fromUser, User toUser) throws Exception {
+        checkFriendNotEqualsUser(fromUser, toUser);
+        checkNotExistedFriend(fromUser, toUser);
+    }
+
+    private void checkFriendNotEqualsUser(User fromUser, User toUser) throws Exception {
+        if (fromUser.equals(toUser)) {
+            log.error(FOLLOW_ERROR);
+            throw new Exception("유효하지 않은 친구 추가 요청입니다.");
+        }
+    }
+
+    private void checkNotExistedFriend(User fromUser, User toUser) throws Exception {
+        if (repository.existsByFromUserAndToUser(fromUser, toUser)) {
+            log.error(FOLLOW_ERROR);
+            throw new Exception("이미 존재하는 친구입니다.");
+        }
     }
 }
