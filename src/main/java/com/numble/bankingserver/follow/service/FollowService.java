@@ -1,10 +1,10 @@
 package com.numble.bankingserver.follow.service;
 
 import com.numble.bankingserver.follow.domain.Follow;
-import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.follow.repository.FollowRepository;
-import com.numble.bankingserver.user.repository.UserRepository;
 import com.numble.bankingserver.follow.vo.FollowVO;
+import com.numble.bankingserver.user.domain.User;
+import com.numble.bankingserver.user.repository.UserRepository;
 import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 public class FollowService {
 
     private final String FOLLOW_ERROR = "FOLLOW ERROR";
+    private final String PAGING_ERROR = "PAGING ERROR";
     private final FollowRepository repository;
     private final UserRepository userRepository;
 
@@ -36,10 +37,14 @@ public class FollowService {
         log.info("follow from {} to {}", userId, followingId);
     }
 
-
     public Page<FollowVO> lookUpFollowList(int page, String userId) {
+        checkPasitivePage(page);
+
         PageRequest pageRequest = PageRequest.of(page, 20);
         Page<Follow> followList = repository.findByFromUserUserId(userId, pageRequest);
+
+        checkValidPage(page, followList);
+
         return new PageImpl<>(
             FollowVO.toFollowList(followList), pageRequest, followList.getTotalElements()
         );
@@ -69,6 +74,21 @@ public class FollowService {
         if (repository.existsByFromUserAndToUser(fromUser, toUser)) {
             log.error(FOLLOW_ERROR);
             throw new Exception("이미 존재하는 친구입니다.");
+        }
+    }
+
+    private void checkValidPage(int page, Page<Follow> followList) {
+        if (page >= followList.getTotalPages()) {
+            log.error(PAGING_ERROR);
+            throw new RuntimeException(
+                "잘못된 페이지 요청입니다.(" + (followList.getTotalPages() - 1) + "이하의 정수");
+        }
+    }
+
+    private void checkPasitivePage(int page) {
+        if (page < 0) {
+            log.error(PAGING_ERROR);
+            throw new RuntimeException("잘못된 페이지 요청입니다. 0 이상의 정수를 입력해주세요.");
         }
     }
 }
