@@ -5,13 +5,13 @@ import com.numble.bankingserver.follow.repository.FollowRepository;
 import com.numble.bankingserver.follow.vo.FollowVO;
 import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.user.repository.UserRepository;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

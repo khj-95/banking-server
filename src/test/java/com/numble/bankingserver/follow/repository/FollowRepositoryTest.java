@@ -7,13 +7,13 @@ import com.numble.bankingserver.follow.domain.Follow;
 import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.user.repository.UserRepository;
 import javax.persistence.EntityManager;
-import javax.transaction.Transactional;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 /*
  * 친구 추가

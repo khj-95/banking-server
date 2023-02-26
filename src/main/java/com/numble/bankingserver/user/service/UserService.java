@@ -3,10 +3,10 @@ package com.numble.bankingserver.user.service;
 import com.numble.bankingserver.user.domain.User;
 import com.numble.bankingserver.user.dto.JoinVO;
 import com.numble.bankingserver.user.repository.UserRepository;
-import javax.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
