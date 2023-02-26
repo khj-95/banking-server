@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,6 +26,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Account extends BaseTime {
+
+    @Transient
+    private final String LACK_OF_BALANCE = "잔액 부족";
+    @Transient
+    private final String MAX_OUT = "한도 초과";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,6 +56,20 @@ public class Account extends BaseTime {
             .accountNumber(accountDTO.getAccountNumber())
             .balance(accountDTO.getBalance())
             .build();
+    }
+
+    public void deposit(long amount) {
+        if (balance + amount < 0) {
+            throw new RuntimeException(MAX_OUT);
+        }
+        balance += amount;
+    }
+
+    public void withdraw(long amount) {
+        if (amount > balance) {
+            throw new RuntimeException(LACK_OF_BALANCE);
+        }
+        balance -= amount;
     }
 
     @PrePersist
