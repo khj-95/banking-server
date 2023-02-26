@@ -18,14 +18,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Getter
 @Table(name = "account")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Slf4j
 public class Account extends BaseTime {
 
     @Id
@@ -57,8 +55,7 @@ public class Account extends BaseTime {
     @PrePersist
     private void checkBalance() {
         if (this.balance < 0) {
-            log.info("잔액은 음수일 수 없습니다.");
-            throw new RuntimeException();
+            throw new RuntimeException("잔액은 음수일 수 없습니다.");
         }
     }
 
