@@ -1,8 +1,9 @@
 package com.numble.bankingserver.user.service;
 
 import com.numble.bankingserver.user.domain.User;
-import com.numble.bankingserver.user.vo.JoinVO;
+import com.numble.bankingserver.user.exception.UserAlreadyExistsException;
 import com.numble.bankingserver.user.repository.UserRepository;
+import com.numble.bankingserver.user.vo.JoinVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,9 @@ public class UserService {
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
 
-    public void joinUser(JoinVO joinVO) throws Exception {
+    public void joinUser(JoinVO joinVO) {
         if (repository.findByUserId(joinVO.getId()).isPresent()) {
-            throw new Exception("이미 존재하는 아이디입니다.");
+            throw new UserAlreadyExistsException("이미 존재하는 아이디입니다.");
         }
 
         User user = User.createUser(joinVO);

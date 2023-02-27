@@ -1,7 +1,8 @@
 package com.numble.bankingserver.user.controller;
 
-import com.numble.bankingserver.user.vo.JoinVO;
+import com.numble.bankingserver.user.exception.UserAlreadyExistsException;
 import com.numble.bankingserver.user.service.UserService;
+import com.numble.bankingserver.user.vo.JoinVO;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,8 +22,14 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/join")
-    public ResponseEntity<String> join(@Valid @RequestBody JoinVO joinVO) throws Exception {
-        service.joinUser(joinVO);
-        return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
+    public ResponseEntity<String> join(@Valid @RequestBody JoinVO joinVO) {
+        HttpStatus status;
+        try {
+            service.joinUser(joinVO);
+            status = HttpStatus.CREATED;
+        } catch (UserAlreadyExistsException exception) {
+            status = HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+        return new ResponseEntity<>("회원가입 완료", status);
     }
 }
