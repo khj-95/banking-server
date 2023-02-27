@@ -1,6 +1,6 @@
 package com.numble.bankingserver.user.controller;
 
-import com.numble.bankingserver.user.dto.JoinVO;
+import com.numble.bankingserver.user.vo.JoinVO;
 import com.numble.bankingserver.user.service.UserService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;

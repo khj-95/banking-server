@@ -6,7 +6,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.numble.bankingserver.user.domain.User;
-import com.numble.bankingserver.user.dto.JoinVO;
+import com.numble.bankingserver.user.vo.JoinVO;
 import com.numble.bankingserver.user.repository.UserRepository;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;

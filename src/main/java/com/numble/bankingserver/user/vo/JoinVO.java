@@ -1,4 +1,4 @@
-package com.numble.bankingserver.user.dto;
+package com.numble.bankingserver.user.vo;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

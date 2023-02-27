@@ -1,6 +1,6 @@
 package com.numble.bankingserver.user.domain;
 
-import com.numble.bankingserver.user.dto.JoinVO;
+import com.numble.bankingserver.user.vo.JoinVO;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;

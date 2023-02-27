@@ -1,7 +1,7 @@
 package com.numble.bankingserver.user.service;
 
 import com.numble.bankingserver.user.domain.User;
-import com.numble.bankingserver.user.dto.JoinVO;
+import com.numble.bankingserver.user.vo.JoinVO;
 import com.numble.bankingserver.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

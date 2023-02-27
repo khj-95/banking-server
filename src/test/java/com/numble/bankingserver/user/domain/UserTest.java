@@ -2,7 +2,7 @@ package com.numble.bankingserver.user.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.numble.bankingserver.user.dto.JoinVO;
+import com.numble.bankingserver.user.vo.JoinVO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
