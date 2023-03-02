@@ -3,9 +3,11 @@ package com.numble.bankingserver.transfer.service;
 import com.numble.bankingserver.follow.repository.FollowRepository;
 import com.numble.bankingserver.open.domain.Account;
 import com.numble.bankingserver.open.repository.AccountRepository;
+import com.numble.bankingserver.transfer.event.TransferedNotificationEvent;
 import com.numble.bankingserver.transfer.vo.TransferVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ public class TransferService {
     private final String FRIEND = "친구";
     private final FollowRepository followRepository;
     private final AccountRepository accountRepository;
+    private final ApplicationEventPublisher publisher;
 
     public void transfer(TransferVO transfer) {
         try {
@@ -34,6 +37,8 @@ public class TransferService {
             fromUserAccount.withdraw(transfer.getAmount());
 
             toUserAccount.deposit(transfer.getAmount());
+
+            publisher.publishEvent(new TransferedNotificationEvent(transfer));
 
         } catch (RuntimeException e) {
 
